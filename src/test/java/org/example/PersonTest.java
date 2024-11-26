@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PersonTest {
 
+    static final String[] MY_STATE_VALUES = {"PENDING", "PROCESSING", "PROCESSED"};
+
     @Test
     public void shouldReturnHelloWorld() {
 
@@ -35,6 +37,39 @@ public class PersonTest {
             i++;
         } while (i < 4);
         assertEquals(4, Person.numberOfPersons());
+    }
+
+    @Test void demonstrateArrays() {
+        Person persons [] = new Person[4];
+        persons[0] = new Person();
+        persons[1] = new Person();
+        persons[2] = new Person();
+        persons[3] = new Person();
+        for (int i = 0; i < persons.length; i++) {
+            persons[i] = new Person();
+        }
+
+        for (Person person: persons) {
+            person.helloWorld();
+        }
+
+        Person myPerson = new Person();
+        Person myPerson2 = null;
+
+        final Person[] person2 = {persons[0], persons[3], myPerson, myPerson2, persons[2], persons[2]};
+
+        for(LoggingLevel state: LoggingLevel.values()) {
+
+            if (state == LoggingLevel.PENDING) {
+                callAMethod();
+            }
+            if (state == LoggingLevel.PROCESSING) {
+                callAMethod();
+            }
+            if (state == LoggingLevel.PROCESSED) {
+                callAMethod();
+            }
+        }
     }
 
     @Test
