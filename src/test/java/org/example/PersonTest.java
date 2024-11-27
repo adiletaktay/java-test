@@ -2,11 +2,23 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PersonTest {
 
-    static final String[] MY_STATE_VALUES = {"PENDING", "PROCESSING", "PROCESSED"};
+    private static final String[] MY_STATE_VALUES = {"PENDING", "PROCESSING", "PROCESSED"};
+
+    private static final int SOMETHING = 40;
+    private static final int PROCESSING = 41;
+    private static final int PROCESSED = 42;
+
+    private static final String PENDING = "42";
+
+    public String[] states() {
+        return Arrays.copyOf(MY_STATE_VALUES, MY_STATE_VALUES.length);
+    }
 
     @Test
     public void shouldReturnHelloWorld() {
@@ -57,6 +69,25 @@ public class PersonTest {
         Person myPerson2 = null;
 
         final Person[] person2 = {persons[0], persons[3], myPerson, myPerson2, persons[2], persons[2]};
+
+        LoggingLevel state = LoggingLevel.PROCESSING;
+
+        String myString = "something";
+
+        char myState = 'd';
+        myState = 300;
+
+        switch (myState) {
+            default:
+                someOtherMethod();
+                break;
+            case PENDING:
+                // falls through
+            case "something:
+                callAMethod3();
+                break;
+            default:
+        }
 
         for(LoggingLevel state: LoggingLevel.values()) {
 
