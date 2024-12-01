@@ -8,7 +8,7 @@ public class CarSelector {
         CarService carService = new CarService();
         for (String argument : arguments) {
             if (isValid(argument)) {
-                carService.process(argument);
+
             } else {
                 System.err.println("ignoring invalid argument:" + argument);
             }

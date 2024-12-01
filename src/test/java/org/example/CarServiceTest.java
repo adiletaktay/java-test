@@ -5,8 +5,14 @@ import org.junit.jupiter.api.Test;
 public class CarServiceTest {
 
     @Test
-    public void shouldDemonstrateLogging() {
+    public void shouldDemonstrateInterfaces() {
         CarService carService = new CarService();
-        carService.process("BMW");
+        Car car;
+        if (true) {
+            car = new Porsche();
+        } else {
+            car = new BMW();
+        }
+        carService.drive(car);
     }
 }
