@@ -1,6 +1,6 @@
 package org.example;
 
-public class Porsche implements Car, Cloneable {
+public class Porsche implements Cloneable {
 
     private String ownersName;
 

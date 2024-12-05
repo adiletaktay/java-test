@@ -2,7 +2,7 @@ package org.example;
 
 import java.awt.*;
 
-public class BMW implements Car, Cloneable {
+public class BMW implements Cloneable {
 
     private Name ownersName;
     private Color color;
