@@ -1,8 +1,25 @@
 package org.example;
 
-public class Dog extends Animal {
+public class Dog {
+    String name;
+    String breed;
+    int speed;
 
-    public void eat() {
-        System.out.println("Dog is eating");
+    void run() {
+        String result = "";
+        for (int i = 0; i < speed; i++) {
+            result += "run";
+
+            if (i == speed - 1) {
+                result += ".";
+            } else {
+                result += ", ";
+            }
+        }
+        System.out.println(result);
+    }
+
+    String info() {
+        return "Name: " + name + " Bread: " + breed + " Speed " + speed;
     }
 }
