@@ -51,5 +51,12 @@ public class Main {
 
         Employee employee = new Employee("Иван", "Программист", 50000);
         System.out.println(employee.getInfo(12));
+
+        Monster monster1 = new Monster();
+        Monster monster2 = new Monster(1, 1, 1);
+        Monster monster3 = new Monster(4, 2);
+        monster1.voice();
+        monster2.voice(3);
+        monster3.voice(5, "Я монстр 3");
     }
 }
