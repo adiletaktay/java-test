@@ -1,63 +1,63 @@
 package org.example;
 
 public class Box {
-    double width;
-    double height;
-    double length;
+    private double width;
+    private double height;
+    private double length;
 
-    Box(double width, double height, double length) {
+    public Box(double width, double height, double length) {
         this.width = width;
         this.height = height;
         this.length = length;
     }
 
-    Box(double size) {
+    public Box(double size) {
         width = size;
         height = size;
         length = size;
     }
 
-    Box() {
+    public Box() {
         width = 0;
         height = 0;
         length = 0;
     }
 
-    Box(Box box) {
+    public Box(Box box) {
         this.width = box.width;
         this.height = box.height;
         this.length = box.length;
     }
 
-    Box(Box box1, Box box2) {
+    public Box(Box box1, Box box2) {
         this.width = box1.width + box2.width;
         this.length = box1.length + box2.length;
         this.height = box1.height + box2.height;
     }
 
-    void setDimens(double width, double height, double length) {
+    public void setDimens(double width, double height, double length) {
         this.width = width;
         this.height = height;
         this.length = length;
     }
 
-    Box increase(int i) {
+    public Box increase(int i) {
         return new Box(width * i, height * i, length * i);
     }
 
-    Box sumBox(Box box) {
+    public Box sumBox(Box box) {
         return new Box(this.width + box.width, this.height + box.height, this.length + box.length);
     }
 
-    double volume() {
+    public double volume() {
         return width * height * length;
     }
 
-    void showVolume() {
+    public void showVolume() {
         System.out.println(volume());
     }
 
-    int compare(Box box) {
+    public int compare(Box box) {
         double thisVolume = volume();
         double boxVolume = box.volume();
         int result;
@@ -69,5 +69,17 @@ public class Box {
             result = 0;
         }
         return result;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public double getLength() {
+        return length;
     }
 }
