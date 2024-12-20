@@ -45,10 +45,10 @@ public class Main {
         dog.run();
         System.out.println(dog.info());
 
-        Rect rect = new Rect();
-        rect.setDimens(20, 30);
-        System.out.println(rect.perimeter());
+        Rect rect = new Rect(5, 10);
+        Triangle triangle = new Triangle(10);
         System.out.println(rect.area());
+        System.out.println(triangle.area());
 
         Employee employee = new Employee("Иван", "Программист", 50000);
         System.out.println(employee.getInfo(12));
@@ -68,5 +68,10 @@ public class Main {
         box3.showVolume();
         double volumeSum = box1.volume() + box3.volume();
         System.out.println("box1 + box3 = " + volumeSum);
+
+        Box box = new Box(15);
+        BoxWeight boxWeight = new BoxWeight(10, 20, 30, 40);
+        box.showInfo();
+        boxWeight.showInfo();
     }
 }

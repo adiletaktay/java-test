@@ -1,19 +1,16 @@
 package org.example;
 
-public class Rect {
-    double width;
-    double height;
-
-    void setDimens(double width, double height) {
-        this.width = width;
-        this.height = height;
+public class Rect extends Figure {
+    public Rect(double a, double b) {
+        super(a, b);
     }
 
-    double area() {
-        return width * height;
+    public Rect(double size) {
+        super(size, size);
     }
 
-    double perimeter() {
-        return (width + height) * 2;
+    @Override
+    public double area() {
+        return getA() * getB();
     }
 }
