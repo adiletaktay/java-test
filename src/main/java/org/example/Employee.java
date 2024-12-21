@@ -1,17 +1,17 @@
 package org.example;
 
 public class Employee {
-    String name;
-    String position;
-    int salary;
+    private String name;
 
-    Employee(String name, String position, int salary) {
+    public Employee(String name) {
         this.name = name;
-        this.position = position;
-        this.salary = salary;
     }
 
-    String getInfo(int month) {
-        return "Имя: " + name + ". Должность: " + position + ". За последние " + month + " месяцев получил " + month * salary + " рублей.";
+    public String getName() {
+        return name;
+    }
+
+    public void voice() {
+        System.out.println(name);
     }
 }

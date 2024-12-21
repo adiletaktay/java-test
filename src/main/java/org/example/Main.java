@@ -50,8 +50,64 @@ public class Main {
         System.out.println(rect.area());
         System.out.println(triangle.area());
 
-        Employee employee = new Employee("Иван", "Программист", 50000);
-        System.out.println(employee.getInfo(12));
+        Programmer programmer1 = new Programmer("Adi");
+        Programmer programmer2 = new Programmer("Madi");
+        Programmer programmer3 = new Programmer("Shadi");
+        Driver driver1 = new Driver("Sadi");
+        Driver driver2 = new Driver("Body");
+        Driver driver3 = new Driver("Tidy");
+        Cooker cooker1 = new Cooker("Diddy");
+        Cooker cooker2 = new Cooker("Lady");
+        Cooker cooker3 = new Cooker("Willy");
+
+        ArrayList<Employee> employees = new ArrayList<>();
+        employees.add(programmer1);
+        employees.add(programmer2);
+        employees.add(programmer3);
+        employees.add(driver1);
+        employees.add(driver2);
+        employees.add(driver3);
+        employees.add(cooker1);
+        employees.add(cooker2);
+        employees.add(cooker3);
+        for (Employee employee : employees) {
+            employee.voice();
+        }
+
+        ArrayList<CodeWritable> programmers = new ArrayList<>();
+        programmers.add(programmer1);
+        programmers.add(programmer2);
+        programmers.add(programmer3);
+        for (CodeWritable programmer : programmers) {
+            programmer.writeCode();
+        }
+
+        ArrayList<Drivable> drivers = new ArrayList<>();
+        drivers.add(driver1);
+        drivers.add(driver2);
+        drivers.add(driver3);
+        for (Drivable driver : drivers) {
+            driver.drive();
+        }
+
+        ArrayList<Cookable> cookers = new ArrayList<>();
+        cookers.add(cooker1);
+        cookers.add(cooker2);
+        cookers.add(cooker3);
+        for (Cookable cookable : cookers) {
+            cookable.cook();
+        }
+
+        Director director = new Director();
+        director.force(new Counter() {
+            @Override
+            public String report(int countOfMonths) {
+                return "Отчет за " + countOfMonths + " месяцев";
+            }
+        }, 12);
+
+        MyCounter counter = new MyCounter();
+        director.force(counter, 12);
 
         Monster monster1 = new Monster();
         Monster monster2 = new Monster(1, 1, 1);
