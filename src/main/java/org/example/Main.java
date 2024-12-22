@@ -4,6 +4,17 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
+        try {
+            int[] array = new int[10];
+            System.out.println(array[25]);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Выход за пределы массива");
+        }
+
+        int random = (int) (Math.random() * 90 + 10);
+        String result = String.format("Случайное число %s. Попробуйте еще раз...", random);
+        System.out.println(result);
+
         ArrayList<Integer> numbers = new ArrayList<>();
         ArrayList<String> names = new ArrayList<>();
         ArrayList<String> namesAndNumbers = new ArrayList<>();
