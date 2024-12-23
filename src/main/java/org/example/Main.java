@@ -3,7 +3,42 @@ package org.example;
 import java.util.ArrayList;
 
 public class Main {
+
+    static boolean win = false;
+
     public static void main(String[] args) {
+        int random1 = (int) (Math.random() * 1000000000);
+        System.out.println(random1);
+        Thread timer = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int i = 0;
+                try {
+                    while (!win) {
+                        System.out.println(i);
+                        i++;
+                        Thread.sleep(1000);
+                    }
+                } catch (InterruptedException e) {
+
+                }
+            }
+        });
+        Thread player = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (!win) {
+                    int guessNumber = (int) (Math.random() * 1000000000);
+                    if (guessNumber == random1) {
+                        win = true;
+                        System.out.println(guessNumber);
+                    }
+                }
+            }
+        });
+        timer.start();
+        player.start();
+
         try {
             int[] array = new int[10];
             System.out.println(array[25]);
