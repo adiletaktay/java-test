@@ -175,5 +175,10 @@ public class Main {
         BoxWeight boxWeight = new BoxWeight(10, 20, 30, 40);
         box.showInfo();
         boxWeight.showInfo();
+
+        Car car1 = new Car("Porsche", 1);
+        Car car2 = new Car("Porsche", 1);
+        System.out.println(car1.hashCode());
+        System.out.println(car2.hashCode());
     }
 }

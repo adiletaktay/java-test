@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Objects;
+
 public class Car {
 
     private String brand;
@@ -16,5 +18,23 @@ public class Car {
 
     public int getNumber() {
         return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Car car = (Car) obj;
+        return number == car.number &&
+                Objects.equals(brand, car.brand);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(brand, number);
     }
 }
