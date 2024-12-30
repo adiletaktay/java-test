@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Iterator;
+
 public class CarLinkedList implements CarList {
 
     private Node first;
@@ -89,6 +91,26 @@ public class CarLinkedList implements CarList {
         first = null;
         last = null;
         size = 0;
+    }
+
+    @Override
+    public Iterator<Car> iterator() {
+        return new Iterator<Car>() {
+
+            private Node node = first;
+
+            @Override
+            public boolean hasNext() {
+                return node != null;
+            }
+
+            @Override
+            public Car next() {
+                Car car = node.value;
+                node = node.next;
+                return car;
+            }
+        };
     }
 
     private int findElement(Car car) {
