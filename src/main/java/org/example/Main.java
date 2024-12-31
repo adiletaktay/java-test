@@ -1,6 +1,9 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Main {
 
@@ -187,6 +190,19 @@ public class Main {
         }
         for (Car car : cars) {
             System.out.println(car.getBrand() + " " + car.getNumber());
+        }
+
+        Set<Integer> numbers1 = new TreeSet<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return -o1.compareTo(o2);
+            }
+        });
+        for (int i = 0; i < 100; i++) {
+            numbers1.add((int) (Math.random() * 10));
+        }
+        for (int number : numbers1) {
+            System.out.println(number);
         }
     }
 }
