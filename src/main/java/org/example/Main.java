@@ -1,9 +1,6 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Main {
 
@@ -203,6 +200,14 @@ public class Main {
         }
         for (int number : numbers1) {
             System.out.println(number);
+        }
+
+        HashMap<CarOwner, Car> map = new HashMap<>();
+        CarOwner key = new CarOwner(1, "Name", "LastName");
+        map.put(key, new Car("Brand1", 1));
+        key.setId(8);
+        for (CarOwner carOwner : map.keySet()) {
+            System.out.println(carOwner.getId());
         }
     }
 }
