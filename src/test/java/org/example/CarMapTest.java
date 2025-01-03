@@ -7,11 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CarMapTest {
 
-    private CarMap map;
+    private CarMap<CarOwner, Car> map;
 
     @BeforeEach
     public void setUp() throws Exception {
-        map = new CarHashMap();
+        map = new CarHashMap<>();
     }
 
     @Test
