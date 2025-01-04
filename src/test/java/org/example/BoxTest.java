@@ -2,15 +2,22 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BoxTest {
 
     @Test
     public void testBox() {
-        Box<String, Integer, Float> box1 = new Box<>("string", 2, 3.5f);
-        Box<String, Integer, Float> box2 = new Box<>("string", 5, 6.5f);
-        float result = box1.getValue() + box1.getValue2() + box2.getValue() + box2.getValue2();
-        assertEquals(17, result, 0.001);
+        List<Integer> numbers = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            numbers.add(i);
+        }
+        List<Integer> numbers2 = new ArrayList<>();
+        Box.transfer(numbers, numbers2);
+        assertEquals(0, numbers.size());
+        assertEquals(10, numbers2.size());
     }
 }
