@@ -1,8 +1,7 @@
 package org.example;
 
 public class Director {
-    public void force(Counter counter, int i) {
-        String report = counter.report(i);
-        System.out.println(report);
+    public String force(Worker worker, int count) {
+        return worker.work(count);
     }
 }

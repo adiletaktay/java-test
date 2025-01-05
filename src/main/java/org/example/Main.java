@@ -9,30 +9,24 @@ public class Main {
     public static void main(String[] args) {
         int random1 = (int) (Math.random() * 1000000000);
         System.out.println(random1);
-        Thread timer = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int i = 0;
-                try {
-                    while (!win) {
-                        System.out.println(i);
-                        i++;
-                        Thread.sleep(1000);
-                    }
-                } catch (InterruptedException e) {
-
+        Thread timer = new Thread(() -> {
+            int i = 0;
+            try {
+                while (!win) {
+                    System.out.println(i);
+                    i++;
+                    Thread.sleep(1000);
                 }
+            } catch (InterruptedException e) {
+
             }
         });
-        Thread player = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (!win) {
-                    int guessNumber = (int) (Math.random() * 1000000000);
-                    if (guessNumber == random1) {
-                        win = true;
-                        System.out.println(guessNumber);
-                    }
+        Thread player = new Thread(() -> {
+            while (!win) {
+                int guessNumber = (int) (Math.random() * 1000000000);
+                if (guessNumber == random1) {
+                    win = true;
+                    System.out.println(guessNumber);
                 }
             }
         });
@@ -145,15 +139,14 @@ public class Main {
         }
 
         Director director = new Director();
-        director.force(new Counter() {
-            @Override
-            public String report(int countOfMonths) {
-                return "Отчет за " + countOfMonths + " месяцев";
+        Worker worker = (n) -> {
+            for (int i = 0; i < n; i++) {
+                System.out.println("Working");
             }
-        }, 12);
-
-        MyCounter counter = new MyCounter();
-        director.force(counter, 12);
+            return "Success";
+        };
+        String res = director.force(worker, 5);
+        System.out.println(res);
 
         Monster monster1 = new Monster();
         Monster monster2 = new Monster(1, 1, 1);
@@ -162,12 +155,7 @@ public class Main {
         monster2.voice(3);
         monster3.voice(5, "Я монстр 3");
 
-        Set<Integer> numbers1 = new TreeSet<>(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return -o1.compareTo(o2);
-            }
-        });
+        Set<Integer> numbers1 = new TreeSet<>((o1, o2) -> -o1.compareTo(o2));
         for (int i = 0; i < 100; i++) {
             numbers1.add((int) (Math.random() * 10));
         }
@@ -182,5 +170,36 @@ public class Main {
         for (CarOwner carOwner : map.keySet()) {
             System.out.println(carOwner.getId());
         }
+
+        List<Integer> numbers2 = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            numbers2.add((int) (Math.random() * 100 + 100));
+        }
+        List<String> result2 = numbers2.stream()
+                .filter((integer -> integer % 2 == 0 && integer % 5 == 0))
+                .map((Math::sqrt))
+                .map((sqrt) -> "Sqrt: " + sqrt)
+                .toList();
+        for (String s : result2) {
+            System.out.println(s);
+        }
+    }
+
+    private static List<String> map(List<Integer> numbers) {
+        List<String> result = new ArrayList<>();
+        for (int number : numbers) {
+            result.add("Number: " + number);
+        }
+        return result;
+    }
+
+    private static List<Integer> filter(List<Integer> list, Predicate predicate) {
+        List<Integer> result = new ArrayList<>();
+        for (int i : list) {
+            if (predicate.test(i)) {
+                result.add(i);
+            }
+        }
+        return result;
     }
 }
