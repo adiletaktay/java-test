@@ -7,6 +7,29 @@ public class Main {
     static boolean win = false;
 
     public static void main(String[] args) {
+        List<User> users = new ArrayList<>();
+        users.add(new User("Adi", 26));
+        users.add(new User("Madi", 35));
+        users.add(new User("Shadi", 44));
+        users.add(new User("Di", 25));
+        users.add(new User("Kadi", 10));
+
+        users.stream()
+                .filter(user1 -> user1.getName().contains("S"))
+                .findAny()
+                .ifPresentOrElse(System.out::println, () -> System.out.println("User not found"));
+
+        List<Float> numbers3 = new ArrayList<>();
+        for (int i = 0; i < 30_000_000; i++) {
+            numbers3.add((float) i);
+        }
+        long before = System.currentTimeMillis();
+        numbers3.parallelStream()
+                .map((number) -> Math.sin(0.2f + number / 5) * Math.cos(0.2f + number / 5) * Math.cos(0.4f + number / 2))
+                .toList();
+        long after = System.currentTimeMillis();
+        System.out.println(after - before);
+
         int random1 = (int) (Math.random() * 1000000000);
         System.out.println(random1);
         Thread timer = new Thread(() -> {
