@@ -1,5 +1,9 @@
 package org.example;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 public class Main {
@@ -7,6 +11,24 @@ public class Main {
     static boolean win = false;
 
     public static void main(String[] args) {
+        File directory = new File("folder");
+        directory.mkdir();
+        File file = new File(directory, "names.txt");
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try (InputStream inputStream = new FileInputStream(file)) {
+            int a = inputStream.read();
+            while (a != -1) {
+                System.out.print((char) a);
+                a = inputStream.read();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         List<User> users = new ArrayList<>();
         users.add(new User("Adi", 26));
         users.add(new User("Madi", 35));
