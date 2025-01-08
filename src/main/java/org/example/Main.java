@@ -1,9 +1,6 @@
 package org.example;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 
 public class Main {
@@ -12,19 +9,28 @@ public class Main {
 
     public static void main(String[] args) {
         File directory = new File("folder");
-        directory.mkdir();
         File file = new File(directory, "names.txt");
-        try {
-            file.createNewFile();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try (InputStream inputStream = new FileInputStream(file)) {
-            int a = inputStream.read();
-            while (a != -1) {
-                System.out.print((char) a);
-                a = inputStream.read();
+        try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file, true))) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter name or \"stop\" to exit");
+            String next = scanner.nextLine();
+            while (!next.equals("stop")) {
+                outputStream.write(next.getBytes());
+                outputStream.write("\n".getBytes());
+                next = scanner.nextLine();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try (InputStream inputStream = new BufferedInputStream(new FileInputStream(file))) {
+            byte[] array = new byte[128];
+            int count = inputStream.read(array);
+            StringBuilder result = new StringBuilder();
+            while (count > 0) {
+                result.append(new String(array, 0, count));
+                count = inputStream.read(array);
+            }
+            System.out.println(result.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
