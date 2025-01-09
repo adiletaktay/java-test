@@ -1,27 +1,22 @@
 package org.example;
 
-public class User {
-    private String name;
-    private int age;
+import java.io.Serializable;
 
-    public User(String name, int age) {
-        this.name = name;
-        this.age = age;
+public class User extends Person implements Serializable {
+    private static final long serialVersionUID = -6849794470754667710L;
+    private transient Address address;
+
+    public User(String name, String lastName, int age, Address address) {
+        super(name, lastName);
+        System.out.println("Constructor");
+        this.address = address;
     }
 
-    public String getName() {
-        return name;
+    public Address getAddress() {
+        return address;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ",age=" + age +
-                '}';
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

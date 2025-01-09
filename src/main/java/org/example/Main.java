@@ -10,42 +10,65 @@ public class Main {
     public static void main(String[] args) {
         File directory = new File("folder");
         File file = new File(directory, "names.txt");
-        try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file, true))) {
+        try (RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r")) {
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter name or \"stop\" to exit");
-            String next = scanner.nextLine();
-            while (!next.equals("stop")) {
-                outputStream.write(next.getBytes());
-                outputStream.write("\n".getBytes());
-                next = scanner.nextLine();
+            System.out.println("Enter next page or \"stop\" to exit");
+            byte[] pageText = new byte[3000];
+            String input = scanner.nextLine();
+            while (!input.equals("stop")) {
+                int page = Integer.parseInt(input);
+                randomAccessFile.seek((page - 1) * pageText.length);
+                int count = randomAccessFile.read(pageText);
+                System.out.println(new String(pageText, 0, count));
+                System.out.println("Enter next page or \"stop\" to exit");
+                input = scanner.nextLine();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        try (InputStream inputStream = new BufferedInputStream(new FileInputStream(file))) {
-            byte[] array = new byte[128];
-            int count = inputStream.read(array);
-            StringBuilder result = new StringBuilder();
-            while (count > 0) {
-                result.append(new String(array, 0, count));
-                count = inputStream.read(array);
-            }
-            System.out.println(result.toString());
+
+        File file2 = new File("users.usr");
+//        try {
+//            file2.createNewFile();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        User user = new User("John", "Smith", 25, new Address("Main", 10));
+//        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream((new FileOutputStream(file2)))) {
+//            objectOutputStream.writeObject(user);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        try (ObjectInputStream objectInputStream = new ObjectInputStream((new FileInputStream(file2)))) {
+            User savedUser = (User) objectInputStream.readObject();
+            System.out.println(savedUser);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        List<User> users = new ArrayList<>();
-        users.add(new User("Adi", 26));
-        users.add(new User("Madi", 35));
-        users.add(new User("Shadi", 44));
-        users.add(new User("Di", 25));
-        users.add(new User("Kadi", 10));
-
-        users.stream()
-                .filter(user1 -> user1.getName().contains("S"))
-                .findAny()
-                .ifPresentOrElse(System.out::println, () -> System.out.println("User not found"));
+        File file3 = new File("cats.cat");
+//        try {
+//            file3.createNewFile();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        List<Cat> cats = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            cats.add(new Cat("Name" + i, "Breed" + i, 1f));
+//        }
+//        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file3))) {
+//            objectOutputStream.writeObject(cats);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file3))) {
+            List<Cat> cats = (List<Cat>) objectInputStream.readObject();
+            for (Cat cat : cats) {
+                System.out.println(cat.getName());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         List<Float> numbers3 = new ArrayList<>();
         for (int i = 0; i < 30_000_000; i++) {
