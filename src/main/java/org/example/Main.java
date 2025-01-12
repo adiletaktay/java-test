@@ -78,13 +78,26 @@ public class Main {
         long after = System.currentTimeMillis();
         System.out.println(after - before);
 
-        ATM atm = new ATM(1000);
-        Thread thread1 = new Thread(() -> atm.withdraw("Max", 300));
-        Thread thread2 = new Thread(() -> atm.withdraw("John", 500));
-        Thread thread3 = new Thread(() -> atm.withdraw("Nick", 400));
+        Counter counter = new Counter();
+        Thread thread1 = new Thread(() -> {
+            for (int i = 0; i < 1000; i++) {
+                counter.inc();
+            }
+        });
+        Thread thread2 = new Thread(() -> {
+            for (int i = 0; i < 1000; i++) {
+                counter.dec();
+            }
+        });
         thread1.start();
         thread2.start();
-        thread3.start();
+        try {
+            thread1.join();
+            thread2.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(counter.getValue());
 
         int random = (int) (Math.random() * 90 + 10);
         String result = String.format("Случайное число %s. Попробуйте еще раз...", random);
