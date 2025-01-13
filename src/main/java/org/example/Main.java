@@ -1,7 +1,11 @@
 package org.example;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.io.RandomAccessFile;
 import java.util.*;
+import java.util.concurrent.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -78,26 +82,41 @@ public class Main {
         long after = System.currentTimeMillis();
         System.out.println(after - before);
 
-        Counter counter = new Counter();
-        Thread thread1 = new Thread(() -> {
-            for (int i = 0; i < 1000; i++) {
-                counter.inc();
+        ExecutorService executorService = Executors.newFixedThreadPool(3, r -> {
+            Thread thread = new Thread(r);
+            thread.setDaemon(true);
+            return thread;
+        });
+        executorService.execute(() ->
+        {
+            try {
+                while (true) {
+                    System.out.print(".");
+                    Thread.sleep(300);
+                }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         });
-        Thread thread2 = new Thread(() -> {
-            for (int i = 0; i < 1000; i++) {
-                counter.dec();
-            }
+        Future<String> futureName = executorService.submit(() -> {
+            Thread.sleep(5000);
+            return "John";
         });
-        thread1.start();
-        thread2.start();
+        Future<Integer> futureAge = executorService.submit(() -> {
+            Thread.sleep(4000);
+            return 25;
+        });
         try {
-            thread1.join();
-            thread2.join();
-        } catch (InterruptedException e) {
+            String name = futureName.get();
+            int age = futureAge.get();
+            System.out.println("\nName: " + name + " Age: " + age);
+        } catch (
+                InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (
+                ExecutionException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(counter.getValue());
 
         int random = (int) (Math.random() * 90 + 10);
         String result = String.format("Случайное число %s. Попробуйте еще раз...", random);
