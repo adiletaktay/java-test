@@ -5,9 +5,15 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.io.RandomAccessFile;
 import java.util.*;
-import java.util.concurrent.*;
 
 public class Main {
+
+    private static final Object MONITOR = new Object();
+    private static final String A = "A";
+    private static final String B = "B";
+    private static final String C = "C";
+    private static String nextLetter = A;
+
     public static void main(String[] args) {
         File directory = new File("folder");
         File file = new File(directory, "names.txt");
@@ -82,41 +88,58 @@ public class Main {
         long after = System.currentTimeMillis();
         System.out.println(after - before);
 
-        ExecutorService executorService = Executors.newFixedThreadPool(3, r -> {
-            Thread thread = new Thread(r);
-            thread.setDaemon(true);
-            return thread;
-        });
-        executorService.execute(() ->
-        {
-            try {
-                while (true) {
-                    System.out.print(".");
-                    Thread.sleep(300);
+        new Thread(() -> {
+            synchronized (MONITOR) {
+                for (int i = 0; i < 5; i++) {
+                    try {
+                        while (!nextLetter.equals(A)) {
+                            MONITOR.wait();
+                        }
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.print(A);
+                    nextLetter = B;
+                    MONITOR.notifyAll();
                 }
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
             }
-        });
-        Future<String> futureName = executorService.submit(() -> {
-            Thread.sleep(5000);
-            return "John";
-        });
-        Future<Integer> futureAge = executorService.submit(() -> {
-            Thread.sleep(4000);
-            return 25;
-        });
-        try {
-            String name = futureName.get();
-            int age = futureAge.get();
-            System.out.println("\nName: " + name + " Age: " + age);
-        } catch (
-                InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (
-                ExecutionException e) {
-            throw new RuntimeException(e);
-        }
+        }).start();
+        new Thread(() -> {
+            synchronized (MONITOR) {
+                for (int i = 0; i < 5; i++) {
+                    try {
+                        while (!nextLetter.equals(B)) {
+                            MONITOR.wait();
+                        }
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.print(B);
+                    nextLetter = C;
+                    MONITOR.notifyAll();
+                }
+            }
+        }).start();
+        new Thread(() -> {
+            synchronized (MONITOR) {
+                for (int i = 0; i < 5; i++) {
+                    try {
+                        while (!nextLetter.equals(C)) {
+                            MONITOR.wait();
+                        }
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.print(C);
+                    nextLetter = A;
+                    MONITOR.notifyAll();
+                }
+            }
+        }).start();
+
+        Account account = new Account(1000, 1000);
+        new Thread(() -> account.transferFrom1To2(300)).start();
+        new Thread(() -> account.transferFrom2To1(500)).start();
 
         int random = (int) (Math.random() * 90 + 10);
         String result = String.format("Случайное число %s. Попробуйте еще раз...", random);
