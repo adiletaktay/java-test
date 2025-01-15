@@ -5,15 +5,12 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.io.RandomAccessFile;
 import java.util.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
 
 public class Main {
-
-    private static final Object MONITOR = new Object();
-    private static final String A = "A";
-    private static final String B = "B";
-    private static final String C = "C";
-    private static String nextLetter = A;
-
     public static void main(String[] args) {
         File directory = new File("folder");
         File file = new File(directory, "names.txt");
@@ -31,50 +28,25 @@ public class Main {
                 input = scanner.nextLine();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         File file2 = new File("users.usr");
-//        try {
-//            file2.createNewFile();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        User user = new User("John", "Smith", 25, new Address("Main", 10));
-//        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream((new FileOutputStream(file2)))) {
-//            objectOutputStream.writeObject(user);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
         try (ObjectInputStream objectInputStream = new ObjectInputStream((new FileInputStream(file2)))) {
             User savedUser = (User) objectInputStream.readObject();
             System.out.println(savedUser);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         File file3 = new File("cats.cat");
-//        try {
-//            file3.createNewFile();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        List<Cat> cats = new ArrayList<>();
-//        for (int i = 0; i < 10; i++) {
-//            cats.add(new Cat("Name" + i, "Breed" + i, 1f));
-//        }
-//        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file3))) {
-//            objectOutputStream.writeObject(cats);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file3))) {
             List<Cat> cats = (List<Cat>) objectInputStream.readObject();
             for (Cat cat : cats) {
                 System.out.println(cat.getName());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         List<Float> numbers3 = new ArrayList<>();
@@ -88,58 +60,60 @@ public class Main {
         long after = System.currentTimeMillis();
         System.out.println(after - before);
 
+        List<Integer> numbers4 = Collections.synchronizedList(new ArrayList<>());
+        CountDownLatch countDownLatch = new CountDownLatch(2);
         new Thread(() -> {
-            synchronized (MONITOR) {
-                for (int i = 0; i < 5; i++) {
-                    try {
-                        while (!nextLetter.equals(A)) {
-                            MONITOR.wait();
-                        }
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    System.out.print(A);
-                    nextLetter = B;
-                    MONITOR.notifyAll();
+            try {
+                for (int i = 0; i < 100; i++) {
+                    Thread.sleep(100);
+                    numbers4.add(i);
                 }
+                countDownLatch.countDown();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }).start();
         new Thread(() -> {
-            synchronized (MONITOR) {
-                for (int i = 0; i < 5; i++) {
-                    try {
-                        while (!nextLetter.equals(B)) {
-                            MONITOR.wait();
-                        }
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    System.out.print(B);
-                    nextLetter = C;
-                    MONITOR.notifyAll();
+            try {
+                for (int i = 0; i < 100; i++) {
+                    Thread.sleep(100);
+                    numbers4.add(i);
                 }
+                countDownLatch.countDown();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }).start();
-        new Thread(() -> {
-            synchronized (MONITOR) {
-                for (int i = 0; i < 5; i++) {
-                    try {
-                        while (!nextLetter.equals(C)) {
-                            MONITOR.wait();
-                        }
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    System.out.print(C);
-                    nextLetter = A;
-                    MONITOR.notifyAll();
-                }
-            }
-        }).start();
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(numbers4.size());
 
-        Account account = new Account(1000, 1000);
-        new Thread(() -> account.transferFrom1To2(300)).start();
-        new Thread(() -> account.transferFrom2To1(500)).start();
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        Semaphore semaphore = new Semaphore(3);
+        for (int i = 0; i < 10; i++) {
+            executorService.execute(() -> {
+                String name = Thread.currentThread().getName();
+                System.out.println(name + " started working");
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                try {
+                    semaphore.acquire();
+                    workWithFileSystem();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                } finally {
+                    semaphore.release();
+                }
+                System.out.println(name + " finished working");
+            });
+        }
+        executorService.shutdown();
 
         int random = (int) (Math.random() * 90 + 10);
         String result = String.format("Случайное число %s. Попробуйте еще раз...", random);
@@ -302,5 +276,16 @@ public class Main {
             }
         }
         return result;
+    }
+
+    private static void workWithFileSystem() {
+        String name = Thread.currentThread().getName();
+        System.out.println(name + " started working with file system");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(name + " finished working with file system");
     }
 }
