@@ -5,12 +5,22 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.io.RandomAccessFile;
 import java.util.*;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
+import java.util.concurrent.*;
 
 public class Main {
+
+    private static final int CARS_COUNT_IN_TUNNEL = 3;
+    private static final int CARS_COUNT = 10;
+
+    private static final Semaphore tunnelSemaphore = new Semaphore(CARS_COUNT_IN_TUNNEL);
+    private static final ExecutorService executorService = Executors.newCachedThreadPool();
+    private static final CyclicBarrier cyclicBarrier = new CyclicBarrier(CARS_COUNT);
+    private static final Map<Integer, Long> score = new ConcurrentHashMap<>();
+    private static final CountDownLatch countDownLatch = new CountDownLatch(CARS_COUNT);
+
+    private static int winnerIndex = -1;
+    private static final Object monitor = new Object();
+
     public static void main(String[] args) {
         File directory = new File("folder");
         File file = new File(directory, "names.txt");
@@ -60,60 +70,40 @@ public class Main {
         long after = System.currentTimeMillis();
         System.out.println(after - before);
 
-        List<Integer> numbers4 = Collections.synchronizedList(new ArrayList<>());
-        CountDownLatch countDownLatch = new CountDownLatch(2);
-        new Thread(() -> {
-            try {
-                for (int i = 0; i < 100; i++) {
-                    Thread.sleep(100);
-                    numbers4.add(i);
+        for (int i = 0; i < CARS_COUNT; i++) {
+            final int index = i;
+            executorService.execute(() -> {
+                prepare(index);
+                try {
+                    cyclicBarrier.await();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                } catch (BrokenBarrierException e) {
+                    throw new RuntimeException(e);
                 }
-                countDownLatch.countDown();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
-        new Thread(() -> {
-            try {
-                for (int i = 0; i < 100; i++) {
-                    Thread.sleep(100);
-                    numbers4.add(i);
+                long before1 = System.currentTimeMillis();
+                roadFirst(index);
+                tunnel(index);
+                roadSecond(index);
+                synchronized (monitor) {
+                    if (winnerIndex == -1) {
+                        winnerIndex = index;
+                    }
                 }
+                long after1 = System.currentTimeMillis();
+                score.put(index, after1 - before1);
                 countDownLatch.countDown();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
+            });
+        }
         try {
             countDownLatch.await();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(numbers4.size());
-
-        ExecutorService executorService = Executors.newFixedThreadPool(10);
-        Semaphore semaphore = new Semaphore(3);
-        for (int i = 0; i < 10; i++) {
-            executorService.execute(() -> {
-                String name = Thread.currentThread().getName();
-                System.out.println(name + " started working");
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                try {
-                    semaphore.acquire();
-                    workWithFileSystem();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                } finally {
-                    semaphore.release();
-                }
-                System.out.println(name + " finished working");
-            });
+        for (int key : score.keySet()) {
+            System.out.println(key + " " + score.get(key));
         }
-        executorService.shutdown();
+        System.out.println("Winner " + winnerIndex + " Time: " + score.get(winnerIndex));
 
         int random = (int) (Math.random() * 90 + 10);
         String result = String.format("Случайное число %s. Попробуйте еще раз...", random);
@@ -278,14 +268,43 @@ public class Main {
         return result;
     }
 
-    private static void workWithFileSystem() {
-        String name = Thread.currentThread().getName();
-        System.out.println(name + " started working with file system");
+    private static void sleepRandomTime() {
+        long millis = (long) (Math.random() * 5000 + 1000);
         try {
-            Thread.sleep(1000);
+            Thread.sleep(millis);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(name + " finished working with file system");
+    }
+
+    private static void prepare(int index) {
+        System.out.println(index + " started preparing");
+        sleepRandomTime();
+        System.out.println(index + " finished preparing");
+    }
+
+    private static void roadFirst(int index) {
+        System.out.println(index + " started roadFirst");
+        sleepRandomTime();
+        System.out.println(index + " finished roadFirst");
+    }
+
+    private static void roadSecond(int index) {
+        System.out.println(index + " started roadSecond");
+        sleepRandomTime();
+        System.out.println(index + " finished roadSecond");
+    }
+
+    private static void tunnel(int index) {
+        try {
+            tunnelSemaphore.acquire();
+            System.out.println(index + " started tunnel");
+            sleepRandomTime();
+            System.out.println(index + " finished tunnel");
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            tunnelSemaphore.release();
+        }
     }
 }
