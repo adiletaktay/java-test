@@ -2,14 +2,23 @@ package org.example;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 @Component
 @Aspect
 public class LoggingAspect {
 
-    @Before("execution(public void getBook())")
-    public void beforeGetBookAdvice() {
+    @Pointcut("execution(* get*())")
+    private void allGetMethods() {}
+
+    @Before("allGetMethods()")
+    public void beforeGetLoggingAdvice() {
         System.out.println("beforeGetBookAdvice: попытка получить книгу");
+    }
+
+    @Before("allGetMethods()")
+    public void beforeGetSecurityAdvice() {
+        System.out.println("beforeGetSecurityAdvice: поверка прав на получение на получение книги");
     }
 }
