@@ -1,9 +1,8 @@
-package org.example;
+package org.example.jdbc_examples;
 
 import java.sql.*;
-import java.util.Scanner;
 
-public class JDBCUpdate {
+public class JDBCDelete {
 
     static final String DB_URl = "jdbc:mysql://localhost:3306/test_db";
     static final String USER = "jpauser";
@@ -16,20 +15,11 @@ public class JDBCUpdate {
         try {
             connection = DriverManager.getConnection(DB_URl, USER, PWD);
 
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter name:");
-            String enteredName = scanner.nextLine();
-
-//            Statement statement = connection.createStatement();
-//            String sqlQuery = "UPDATE students SET avg_grade = 7.5 " + "WHERE name = '" + enteredName + "'";
-//            statement.executeUpdate(sqlQuery);
-//
-//            statement.close();
-
             PreparedStatement statement = connection.prepareStatement(
-                    "UPDATE students SET avg_grade = 7.5 WHERE name = ?");
-            statement.setString(1, enteredName);
-            statement.executeUpdate();
+                    "DELETE FROM students WHERE surname = ?");
+            statement.setString(1, "Tregulov");
+            int deletedRows = statement.executeUpdate();
+            System.out.println("deletedRows = " + deletedRows);
 
             statement.close();
 

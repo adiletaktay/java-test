@@ -1,4 +1,6 @@
-package org.example;
+package org.example.jdbc_examples;
+
+import org.example.entity.Student;
 
 import java.sql.*;
 import java.util.ArrayList;
