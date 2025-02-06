@@ -1,4 +1,4 @@
-package org.example.jdbc_examples;
+package org.example.jdbc_crud;
 
 import org.example.entity.Student;
 
