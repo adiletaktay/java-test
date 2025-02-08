@@ -13,7 +13,7 @@ public class Persist_ex {
 
         try {
             transaction.begin();
-            student = new Student("Serena", "Nielsen", 7.2);
+            student = new Student("Chanel", "King", 8.0);
             entityManager.persist(student);
             transaction.commit();
         } catch (Exception e) {
