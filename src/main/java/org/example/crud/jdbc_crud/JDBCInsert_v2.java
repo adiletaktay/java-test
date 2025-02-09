@@ -1,6 +1,6 @@
-package org.example.jdbc_crud;
+package org.example.crud.jdbc_crud;
 
-import org.example.entity.Student;
+import org.example.crud.entity.Student;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,6 +1,6 @@
-package org.example.jdbc_crud;
+package org.example.crud.jdbc_crud;
 
-import org.example.entity.Student;
+import org.example.crud.entity.Student;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,7 +24,7 @@ public class JDBCInsert {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO students(name, surname, avg_grade) VALUES (?, ?, ?)");
             statement.setString(1, student.getName());
-            statement.setString(2, student.getSurName());
+            statement.setString(2, student.getSurname());
             statement.setDouble(3, student.getAvgGrade());
 
             statement.executeUpdate();

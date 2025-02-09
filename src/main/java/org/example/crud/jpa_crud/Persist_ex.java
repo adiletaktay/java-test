@@ -1,9 +1,9 @@
-package org.example.jpa_crud;
+package org.example.crud.jpa_crud;
 
 import jakarta.persistence.*;
-import org.example.entity.Student;
+import org.example.crud.entity.Student;
 
-public class Update_ex {
+public class Persist_ex {
     public static void main(String[] args) {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("jpa-course");
         EntityManager entityManager = factory.createEntityManager();
@@ -13,11 +13,8 @@ public class Update_ex {
 
         try {
             transaction.begin();
-
-            student = entityManager.find(Student.class, 1);
-
-            entityManager.remove(student);
-
+            student = new Student("Chanel", "King", 8.0);
+            entityManager.persist(student);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -30,5 +27,6 @@ public class Update_ex {
                 factory.close();
             }
         }
+        System.out.println(student);
     }
 }

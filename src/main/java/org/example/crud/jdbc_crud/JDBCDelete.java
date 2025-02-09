@@ -1,4 +1,4 @@
-package org.example.jdbc_crud;
+package org.example.crud.jdbc_crud;
 
 import java.sql.*;
 

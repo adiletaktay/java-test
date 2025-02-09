@@ -1,11 +1,9 @@
-package org.example.entity;
+package org.example.relationships.one_to_one.entity;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
-
 @Entity
-@Table(name = "test_students")
+@Table(name = "students")
 public class Student {
 
     @Id
@@ -13,26 +11,26 @@ public class Student {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "first_name", unique = true)
+    @Column(name = "name")
     private String name;
 
-    //    @Column(name = "surname")
-    private String surName;
+    @Column(name = "surname")
+    private String surname;
 
-    @Column(name = "avg_grade", nullable = false)
+    @Column(name = "avg_grade")
     private Double avgGrade;
 
-    @Transient
-    private LocalDateTime createdDate;
+    @OneToOne
+    @JoinColumn(name = "passport_id")
+    private Passport passport;
 
     public Student() {
     }
 
     public Student(String name, String surName, Double avgGrade) {
         this.name = name;
-        this.surName = surName;
+        this.surname = surName;
         this.avgGrade = avgGrade;
-        createdDate = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -51,12 +49,12 @@ public class Student {
         this.name = name;
     }
 
-    public String getSurName() {
-        return surName;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setSurName(String surName) {
-        this.surName = surName;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public Double getAvgGrade() {
@@ -67,12 +65,12 @@ public class Student {
         this.avgGrade = avgGrade;
     }
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
+    public Passport getPassport() {
+        return passport;
     }
 
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
+    public void setPassport(Passport passport) {
+        this.passport = passport;
     }
 
     @Override
@@ -80,9 +78,8 @@ public class Student {
         return "Student{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", surName='" + surName + '\'' +
+                ", surname='" + surname + '\'' +
                 ", avgGrade=" + avgGrade +
-                ", createdDate=" + createdDate +
                 '}';
     }
 }

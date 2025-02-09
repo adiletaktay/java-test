@@ -1,6 +1,6 @@
-package org.example.jdbc_crud;
+package org.example.crud.jdbc_crud;
 
-import org.example.entity.Student;
+import org.example.crud.entity.Student;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class JDBCSelect {
                 Student student = new Student();
                 student.setId(resultSet.getLong("id"));
                 student.setName(resultSet.getString("name"));
-                student.setSurName(resultSet.getString("surname"));
+                student.setSurname(resultSet.getString("surname"));
                 student.setAvgGrade(resultSet.getDouble("avg_grade"));
                 students.add(student);
             }
