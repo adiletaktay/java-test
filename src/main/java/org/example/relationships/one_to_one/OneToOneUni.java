@@ -1,7 +1,6 @@
 package org.example.relationships.one_to_one;
 
 import jakarta.persistence.*;
-import org.example.relationships.one_to_one.entity.Passport;
 import org.example.relationships.one_to_one.entity.Student;
 
 public class OneToOneUni {
@@ -13,13 +12,22 @@ public class OneToOneUni {
 
         try {
             transaction.begin();
+//            PERSIST
+//            Student student1 = new Student("Isaac", "Sharp", 9.8);
+//            Passport passport1 = new Passport("isaac.sharp@eahoo.com", 183, "blue");
+//            student1.setPassport(passport1);
 
-            Student student1 = new Student("Julia", "Dean", 8.7);
-            Passport passport1 = new Passport("julia.dean@gmail.com", 168, "green");
-            student1.setPassport(passport1);
+//            entityManager.persist(passport1);
+//            entityManager.persist(student1);
 
-            entityManager.persist(passport1);
-            entityManager.persist(student1);
+//            FIND
+//            Student student = entityManager.find(Student.class, 100);
+//            System.out.println(student);
+//            System.out.println(student.getPassport());
+
+//            REMOVE
+            Student student = entityManager.find(Student.class, 2);
+            entityManager.remove(student);
 
             transaction.commit();
         } catch (Exception e) {
