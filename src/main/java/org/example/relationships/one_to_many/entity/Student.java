@@ -1,9 +1,9 @@
-package org.example.relationships.one_to_one.entity;
+package org.example.relationships.one_to_many.entity;
 
 import jakarta.persistence.*;
 
-//@Entity
-//@Table(name = "students")
+@Entity
+@Table(name = "students")
 public class Student {
 
     @Id
@@ -19,10 +19,6 @@ public class Student {
 
     @Column(name = "avg_grade")
     private Double avgGrade;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "passport_id")
-    private Passport passport;
 
     public Student() {
     }
@@ -63,14 +59,6 @@ public class Student {
 
     public void setAvgGrade(Double avgGrade) {
         this.avgGrade = avgGrade;
-    }
-
-    public Passport getPassport() {
-        return passport;
-    }
-
-    public void setPassport(Passport passport) {
-        this.passport = passport;
     }
 
     @Override
