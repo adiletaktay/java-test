@@ -20,7 +20,7 @@ public class Student {
     @Column(name = "avg_grade")
     private Double avgGrade;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "university_id")
     private University university;
 
