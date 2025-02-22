@@ -1,28 +1,19 @@
 package org.example.tasks;
 
-import java.util.Scanner;
-
 /*
-Написать программу, которая выводит на экран остаток от деления двух чисел
+Одноклеточная амеба каждые 3 часа делится на 2 клетки.
+Определить,сколько амеб будет через 3, 6, 9, 12,..., 24 часа.
  */
 
 public class Task3 {
     public static void main(String[] args) {
-        try (Scanner scanner = new Scanner(System.in)) {
-            System.out.print("Введите первое число: ");
-            int num1 = scanner.nextInt();
+        int initAmoebaCount = 1;
+        int hours = 24;
+        int divisionInterval = 3;
 
-            System.out.print("Введите второе число: ");
-            int num2 = scanner.nextInt();
-
-            if (num2 != 0) {
-                int remainder = num1 % num2;
-                System.out.println("Остаток от деления: " + remainder);
-            } else {
-                System.out.println("Ошибка: на ноль делить нельзя!");
-            }
-        } catch (Exception e) {
-            System.out.println("Ошибка ввода: " + e.getMessage());
+        for (int hour = divisionInterval; hour <= hours; hour += divisionInterval) {
+            int amoebaCount = initAmoebaCount * (int) Math.pow(2, hour / divisionInterval);
+            System.out.println("Через " + hour + " часов амеб будет: " + amoebaCount);
         }
     }
 }

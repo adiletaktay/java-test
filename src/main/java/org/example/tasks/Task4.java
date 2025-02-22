@@ -1,25 +1,19 @@
 package org.example.tasks;
 
-import java.util.Scanner;
-
 /*
-Написать программу, которая выводит на экран результат сложения двух строк
+Вычислить: 1+2+4+8+...+256
  */
 
 public class Task4 {
     public static void main(String[] args) {
-        try (Scanner scanner = new Scanner(System.in)) {
-            System.out.print("Введите первую строку: ");
-            String str1 = scanner.nextLine();
+        int sum = 0;
+        int currentCount = 1;
 
-            System.out.print("Введите вторую строку: ");
-            String str2 = scanner.nextLine();
-
-            String result = str1 + str2;
-
-            System.out.println("Результат сложения строк: " + result);
-        } catch (Exception e) {
-            System.out.println("Ошибка ввода: " + e.getMessage());
+        while (currentCount <= 256) {
+            sum += currentCount;
+            currentCount *= 2;
         }
+
+        System.out.println("Сумма последовательности: " + sum);
     }
 }

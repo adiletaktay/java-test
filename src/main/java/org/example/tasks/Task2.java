@@ -1,28 +1,24 @@
 package org.example.tasks;
 
 /*
-Написать программу, которая выводит на экран произведение двух чисел
+Начав тренировки, спортсмен в первый день пробежал 10 км.
+Каждый день он увеличивал дневную норму на 10% нормы предыдущего дня.
+Какой суммарный путь пробежит спортсмен за 7 дней?
  */
-
-import java.util.Scanner;
 
 public class Task2 {
     public static void main(String[] args) {
-        try (Scanner scanner = new Scanner(System.in)) {
-            System.out.print("Введите первое число: ");
-            int num1 = scanner.nextInt();
+        double initDistance = 10;
+        double incRate = 0.1;
+        int days = 7;
+        double totalDistance = 0;
+        double distanceForDay = initDistance;
 
-            System.out.print("Введите второе число: ");
-            int num2 = scanner.nextInt();
-
-            if (num1 == 0 || num2 == 0) {
-                System.out.println("Ошибка: на ноль умножить нельзя!");
-            } else {
-                int inc = num1 * num2;
-                System.out.println("Произведение чисел: " + inc);
-            }
-        } catch (Exception e) {
-            System.out.println("Ошибка ввода: " + e.getMessage());
+        for (int i = 0; i < days; i++) {
+            totalDistance += distanceForDay;
+            distanceForDay *= (1 + incRate);
         }
+
+        System.out.println("Суммарный путь за 7 дней: " + totalDistance + " км");
     }
 }
