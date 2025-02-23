@@ -1,19 +1,17 @@
 package org.example.tasks;
 
 /*
-Вычислить: 1+2+4+8+...+256
+Напишите программу, определяющую сумму всех нечетных чисел от 1 до 99
  */
 
 public class Task4 {
     public static void main(String[] args) {
         int sum = 0;
-        int currentCount = 1;
 
-        while (currentCount <= 256) {
-            sum += currentCount;
-            currentCount *= 2;
+        for (int i = 1; i <= 99; i += 2) {
+            sum += i;
         }
 
-        System.out.println("Сумма последовательности: " + sum);
+        System.out.println("Сумма всех нечётных чисел от 1 до 99: " + sum);
     }
 }

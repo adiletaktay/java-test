@@ -1,24 +1,19 @@
 package org.example.tasks;
 
 /*
-Начав тренировки, спортсмен в первый день пробежал 10 км.
-Каждый день он увеличивал дневную норму на 10% нормы предыдущего дня.
-Какой суммарный путь пробежит спортсмен за 7 дней?
+Напишите программу печати таблицы перевода расстояний из дюймов в сантиметрыдля значений длин от 1 до 20 дюймов.
+1 дюйм = 2,54 см
  */
 
 public class Task2 {
     public static void main(String[] args) {
-        double initDistance = 10;
-        double incRate = 0.1;
-        int days = 7;
-        double totalDistance = 0;
-        double distanceForDay = initDistance;
+        final double INCH_TO_CM = 2.54;
 
-        for (int i = 0; i < days; i++) {
-            totalDistance += distanceForDay;
-            distanceForDay *= (1 + incRate);
+        System.out.println("Дюймы   Сантиметры");
+
+        for (int i = 1; i <= 20; i++) {
+            double centimeters = i * INCH_TO_CM;
+            System.out.printf("%d\t%.2f\n", i, centimeters);
         }
-
-        System.out.println("Суммарный путь за 7 дней: " + totalDistance + " км");
     }
 }
