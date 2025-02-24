@@ -1,17 +1,22 @@
 package org.example.tasks;
 
 /*
-Напишите программу, определяющую сумму всех нечетных чисел от 1 до 99
+Есть массив чисел. Заменить каждый нечетный элемент массива на 0.
  */
 
 public class Task4 {
     public static void main(String[] args) {
-        int sum = 0;
+        int[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
-        for (int i = 1; i <= 99; i += 2) {
-            sum += i;
+        for (int i = 0; i < numbers.length; i++) {
+            if (numbers[i] % 2 != 0) {
+                numbers[i] = 0;
+            }
         }
 
-        System.out.println("Сумма всех нечётных чисел от 1 до 99: " + sum);
+        System.out.println("Массив после изменений:");
+        for (int num : numbers) {
+            System.out.print(num + " ");
+        }
     }
 }

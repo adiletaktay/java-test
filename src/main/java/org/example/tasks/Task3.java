@@ -1,13 +1,20 @@
 package org.example.tasks;
 
 /*
-Напишите программу вывода всех четных чисел от 2 до 100 включительно
+Есть массив чисел. Найти среднее арифметическое число элементов массива.
  */
 
 public class Task3 {
     public static void main(String[] args) {
-        for (int i = 2; i <= 100; i += 2) {
-            System.out.println(i);
+        int[] numbers = {10, 20, 30, 40, 50, 60, 70};
+
+        int sum = 0;
+        for (int number : numbers) {
+            sum += number;
         }
+
+        double average = (double) sum / numbers.length;
+
+        System.out.println("Среднее арифметическое: " + average);
     }
 }

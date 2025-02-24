@@ -1,19 +1,42 @@
 package org.example.tasks;
 
 /*
-Напишите программу печати таблицы перевода расстояний из дюймов в сантиметрыдля значений длин от 1 до 20 дюймов.
-1 дюйм = 2,54 см
+Создать массив из 3 элементов. При помощи класса Scanner и пользователя заполнить его.
+Вывести сумму, наименьшее и наибольшее из чисел на экран.
  */
+
+import java.util.Scanner;
 
 public class Task2 {
     public static void main(String[] args) {
-        final double INCH_TO_CM = 2.54;
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Дюймы   Сантиметры");
+        int[] numbers = new int[3];
 
-        for (int i = 1; i <= 20; i++) {
-            double centimeters = i * INCH_TO_CM;
-            System.out.printf("%d\t%.2f\n", i, centimeters);
+        System.out.println("Введите 3 числа:");
+        for (int i = 0; i < numbers.length; i++) {
+            System.out.print("Число " + (i + 1) + ": ");
+            numbers[i] = scanner.nextInt();
         }
+
+        int sum = 0;
+        int min = numbers[0];
+        int max = numbers[0];
+
+        for (int number : numbers) {
+            sum += number;
+            if (number < min) {
+                min = number;
+            }
+            if (number > max) {
+                max = number;
+            }
+        }
+
+        System.out.println("Сумма: " + sum);
+        System.out.println("Наименьшее число: " + min);
+        System.out.println("Наибольшее число: " + max);
+
+        scanner.close();
     }
 }

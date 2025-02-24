@@ -1,30 +1,30 @@
 package org.example.tasks;
 
 /*
-Составьте программу, вычисляющую A*B, не пользуясь операцией умножения.
+Даны числа от 0 до 100.
+- Посчитать сумму четных и вывести на экран
+- Посчитать сумму нечетных и вывести на экран
+- Найти общую сумму всех чисел
  */
-
-import java.util.Scanner;
 
 public class Task1 {
     public static void main(String[] args) {
-        try (Scanner scanner = new Scanner(System.in)) {
+        int evenSum = 0;
+        int oddSum = 0;
+        int totalSum = 0;
 
-            System.out.print("Введите число A: ");
-            int A = scanner.nextInt();
+        for (int i = 0; i <= 100; i++) {
+            totalSum += i;
 
-            System.out.print("Введите число B: ");
-            int B = scanner.nextInt();
-
-            int result = 0;
-
-            for (int i = 0; i < B; i++) {
-                result += A;
+            if (i % 2 == 0) {
+                evenSum += i;
+            } else {
+                oddSum += i;
             }
-
-            System.out.println("Результат A * B = " + result);
-        } catch (Exception e) {
-            System.out.println("Произошла ошибка: " + e.getMessage());
         }
+
+        System.out.println("Сумма четных чисел от 0 до 100: " + evenSum);
+        System.out.println("Сумма нечетных чисел от 0 до 100: " + oddSum);
+        System.out.println("Общая сумма всех чисел от 0 до 100: " + totalSum);
     }
 }
