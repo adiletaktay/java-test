@@ -1,30 +1,26 @@
 package org.example.tasks;
 
 /*
-Даны числа от 0 до 100.
-- Посчитать сумму четных и вывести на экран
-- Посчитать сумму нечетных и вывести на экран
-- Найти общую сумму всех чисел
+При помощи двумерного массива вывести на экран таблицу умножения
  */
 
 public class Task1 {
     public static void main(String[] args) {
-        int evenSum = 0;
-        int oddSum = 0;
-        int totalSum = 0;
+        int size = 10;
+        int[][] multiplicationTable = new int[size][size];
 
-        for (int i = 0; i <= 100; i++) {
-            totalSum += i;
-
-            if (i % 2 == 0) {
-                evenSum += i;
-            } else {
-                oddSum += i;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                multiplicationTable[i][j] = (i + 1) * (j + 1);
             }
         }
 
-        System.out.println("Сумма четных чисел от 0 до 100: " + evenSum);
-        System.out.println("Сумма нечетных чисел от 0 до 100: " + oddSum);
-        System.out.println("Общая сумма всех чисел от 0 до 100: " + totalSum);
+        System.out.println("Таблица умножения:");
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                System.out.print(multiplicationTable[i][j] + "\t");
+            }
+            System.out.println();
+        }
     }
 }

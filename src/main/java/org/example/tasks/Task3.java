@@ -1,20 +1,33 @@
 package org.example.tasks;
 
 /*
-Есть массив чисел. Найти среднее арифметическое число элементов массива.
+Есть массив чисел. Необходимо создать другой массив содержащий только четные элементы из первого
  */
 
 public class Task3 {
     public static void main(String[] args) {
-        int[] numbers = {10, 20, 30, 40, 50, 60, 70};
+        int[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
-        int sum = 0;
-        for (int number : numbers) {
-            sum += number;
+        int evenCount = 0;
+        for (int num : numbers) {
+            if (num % 2 == 0) {
+                evenCount++;
+            }
         }
 
-        double average = (double) sum / numbers.length;
+        int[] evenNumbers = new int[evenCount];
 
-        System.out.println("Среднее арифметическое: " + average);
+        int index = 0;
+        for (int num : numbers) {
+            if (num % 2 == 0) {
+                evenNumbers[index] = num;
+                index++;
+            }
+        }
+
+        System.out.println("Массив с четными числами:");
+        for (int num : evenNumbers) {
+            System.out.print(num + " ");
+        }
     }
 }

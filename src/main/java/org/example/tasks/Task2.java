@@ -1,42 +1,24 @@
 package org.example.tasks;
 
 /*
-Создать массив из 3 элементов. При помощи класса Scanner и пользователя заполнить его.
-Вывести сумму, наименьшее и наибольшее из чисел на экран.
+Есть массив чисел, нужно инвертировать его порядок, т.е. массив [0,1,2,3,4] -> [4,3,2,1,0] или [6,9,8,7] -> [7,8,9,6]
  */
-
-import java.util.Scanner;
 
 public class Task2 {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        int[] numbers = {0, 1, 2, 3, 4};
+//        int[] numbers = {6, 9, 8, 7};
 
-        int[] numbers = new int[3];
-
-        System.out.println("Введите 3 числа:");
-        for (int i = 0; i < numbers.length; i++) {
-            System.out.print("Число " + (i + 1) + ": ");
-            numbers[i] = scanner.nextInt();
+        int n = numbers.length;
+        for (int i = 0; i < n / 2; i++) {
+            int temp = numbers[i];
+            numbers[i] = numbers[n - 1 - i];
+            numbers[n - 1 - i] = temp;
         }
 
-        int sum = 0;
-        int min = numbers[0];
-        int max = numbers[0];
-
-        for (int number : numbers) {
-            sum += number;
-            if (number < min) {
-                min = number;
-            }
-            if (number > max) {
-                max = number;
-            }
+        System.out.println("Массив после инверсии:");
+        for (int num : numbers) {
+            System.out.print(num + " ");
         }
-
-        System.out.println("Сумма: " + sum);
-        System.out.println("Наименьшее число: " + min);
-        System.out.println("Наибольшее число: " + max);
-
-        scanner.close();
     }
 }

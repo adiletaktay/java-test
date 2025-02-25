@@ -1,20 +1,25 @@
 package org.example.tasks;
 
 /*
-Есть массив чисел. Заменить каждый нечетный элемент массива на 0.
- */
+Есть целочисленный неотсортированный массив. Отсортируйте его "пузырьком".
+Попробуйте сами написать и затем посмотрите реализацию
+*/
 
 public class Task4 {
     public static void main(String[] args) {
-        int[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        int[] numbers = {64, 34, 25, 12, 22, 11, 90};
 
-        for (int i = 0; i < numbers.length; i++) {
-            if (numbers[i] % 2 != 0) {
-                numbers[i] = 0;
+        for (int i = 0; i < numbers.length - 1; i++) {
+            for (int j = 0; j < numbers.length - 1 - i; j++) {
+                if (numbers[j] > numbers[j + 1]) {
+                    int temp = numbers[j];
+                    numbers[j] = numbers[j + 1];
+                    numbers[j + 1] = temp;
+                }
             }
         }
 
-        System.out.println("Массив после изменений:");
+        System.out.println("Отсортированный массив:");
         for (int num : numbers) {
             System.out.print(num + " ");
         }
