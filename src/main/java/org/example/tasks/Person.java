@@ -1,62 +1,67 @@
 package org.example.tasks;
 
 /*
-Создайте класс, у которого будут поля имя и возраст. У класса должен быть конструктор, который принимает в виде аргументов
-эти два поля и конструктор без аргументов, который присваивает значения по умолчанию для имени и возраста.
-Добавьте в класс блок инициализации, который будет выводить на экран сообщение о том, что создали новый экземпляр класса.
-Создайте массив, состоящий из обьектов класса из Task2. Выведите полученный массив на экран, должны отображатся
-названия полей класса и их значения.
+Создать класс Person с полями Имя, фамилия, год рождения, пол(мужской и женский), семейный статус(single/married).
+Создайте класс? который будет обрабатывать данные клиентов.
+В этом классе должен быть метод, который в качестве аргумента принимает обьект типа Person и делает следующее: если
+человек старше 18 и single предложите ему услуги своего сайта знакомств(распечатайте сообщение в консоль):
+"Уважаемый Савелий, желаете ли познакомиться с девушкой?" или "Уважаемая Виолетта, мы поможем вам найти мужчину мечты!"
+Создайте еще один класс с методом main в котором создайте массив обьектов Person и обработайте каждый из элементов
+массива с помощью метода из предыдущего класса.
 */
 
 public class Person {
-    private String name;
-    private int age;
+    private String firstName;
+    private String lastName;
+    private int birthYear;
+    private String gender;
+    private String maritalStatus;
 
-    public Person(String name, int age) {
-        this.name = name;
-        this.age = age;
-        init();
+    public Person(String firstName, String lastName, int birthYear, String gender, String maritalStatus) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthYear = birthYear;
+        this.gender = gender;
+        this.maritalStatus = maritalStatus;
     }
 
-    public Person() {
-        this("Unnamed", 18);
+    public String getFirstName() {
+        return firstName;
     }
 
-    private void init() {
-        System.out.println("Создан новый экземпляр класса: " + this.name + ", " + this.age + " лет");
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getName() {
-        return name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public int getAge() {
-        return age;
+    public int getBirthYear() {
+        return birthYear;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setBirthYear(int birthYear) {
+        this.birthYear = birthYear;
     }
 
-    @Override
-    public String toString() {
-        return "Имя: " + this.name + ", Возраст: " + this.age;
+    public String getGender() {
+        return gender;
     }
 
-    public static void main(String[] args) {
-        Person[] people = new Person[5];
-        people[0] = new Person("Adi", 27);
-        people[1] = new Person();
-        people[2] = new Person("Di", 24);
-        people[3] = new Person("Madi", 26);
-        people[4] = new Person("Shadi", 25);
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
-        for (Person person : people) {
-            System.out.println(person);
-        }
+    public String getMaritalStatus() {
+        return maritalStatus;
+    }
+
+    public void setMaritalStatus(String maritalStatus) {
+        this.maritalStatus = maritalStatus;
     }
 }
