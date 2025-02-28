@@ -2,18 +2,15 @@ package org.example.tasks;
 
 public class Main {
     public static void main(String[] args) {
-        Person[] clients = new Person[]{
-                new Person("Савелий", "Петров", 2000, "male", "single"),
-                new Person("Виолетта", "Смирнова", 1995, "female", "single"),
-                new Person("Алексей", "Иванов", 2003, "male", "married"),
-                new Person("Марина", "Кузнецова", 1992, "female", "single"),
-                new Person("Петр", "Дмитриев", 2005, "male", "single")
-        };
+        Computer desktop = new Desktop();
+        Computer laptop = new Laptop();
 
-        ClientService service = new ClientService();
+        desktop.turnOn();
+        desktop.reset();
+        desktop.turnOff();
 
-        for (Person client : clients) {
-            service.offerDatingService(client);
-        }
+        laptop.turnOn();
+        laptop.reset();
+        laptop.turnOff();
     }
 }
