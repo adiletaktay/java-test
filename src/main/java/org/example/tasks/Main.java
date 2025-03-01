@@ -2,15 +2,17 @@ package org.example.tasks;
 
 public class Main {
     public static void main(String[] args) {
-        Computer desktop = new Desktop();
-        Computer laptop = new Laptop();
+        Car car = new Car();
 
-        desktop.turnOn();
-        desktop.reset();
-        desktop.turnOff();
+        car.pressGas();
 
-        laptop.turnOn();
-        laptop.reset();
-        laptop.turnOff();
+        car.startEngine();
+        car.shiftUp();
+
+        car.pressGas();
+        car.shiftUp();
+        car.pressGas();
+
+        car.stopCar();
     }
 }
