@@ -1,15 +1,17 @@
 package org.example.tasks;
 
 /*
-Есть строка “Green. red. blue. yellow”. Необходимо заменить все точки на запятые
+Есть массив строк, вывести на экран все строки, длина которых больше 5 символов
 */
 
 public class Task3 {
     public static void main(String[] args) {
-        String str = "Green. red. blue. yellow";
+        String[] strings = {"apple", "banana", "kiwi", "strawberry", "grape", "blueberry"};
 
-        String modifiedStr = str.replace(".", ",");
-
-        System.out.println(modifiedStr);
+        for (String str : strings) {
+            if (str.length() > 5) {
+                System.out.println(str);
+            }
+        }
     }
 }

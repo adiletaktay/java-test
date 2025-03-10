@@ -1,18 +1,21 @@
 package org.example.tasks;
 
 /*
-Игра в слова. Есть строка “engineering”. Нужно выделить подстроку так, чтобы получилось два слова “engine” и “ring”.
+Есть массив слов. Нужно отфильтровать его так, чтобы в выходном массиве оказались слова, которые начинаются с буквы “W”/”w”.
 */
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Task1 {
     public static void main(String[] args) {
-        String word = "engineering";
+        String[] words = {"While", "major", "Water", "add", "Wool", "good", "world", "Plan", "wonderful", "waste"};
 
-        String firstWord = word.substring(0, 6);
+        List<String> filteredWords = Arrays.stream(words)
+                .filter(word -> word.startsWith("W") || word.startsWith("w"))
+                .collect(Collectors.toList());
 
-        String secondWord = word.substring(7);
-
-        System.out.println("Первое слово: " + firstWord);
-        System.out.println("Второе слово: " + secondWord);
+        System.out.println(filteredWords);
     }
 }
