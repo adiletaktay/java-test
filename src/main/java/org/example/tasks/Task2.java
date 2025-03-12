@@ -1,24 +1,33 @@
 package org.example.tasks;
 
 /*
-Есть склад авто и выяснилось, что всем присвоили неверные маркировки двигателя. Необходимо все 1.4 литра двигатели
-заменить на 2.0Т, а все 1.8, на 1.8Т.
+Вход на вечеринку только по списку. Есть список имен (коллекция). Пользователь вводит с консоли свое имя, а программа
+проверяет его наличие в списке, после чего говорит может он пройти или нет.
 */
 
-import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
 
 public class Task2 {
     public static void main(String[] args) {
-        String[] engines = {"1.4", "1.8", "2.0", "1.4", "1.8", "3.5"};
+        Set<String> guestList = new HashSet<>();
+        guestList.add("Adi");
+        guestList.add("Di");
+        guestList.add("Madi");
+        guestList.add("Shadi");
+        guestList.add("Bob");
 
-        for (int i = 0; i < engines.length; i++) {
-            if (engines[i].equals("1.4")) {
-                engines[i] = "2.0T";
-            } else if (engines[i].equals("1.8")) {
-                engines[i] = "1.8T";
-            }
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите ваше имя: ");
+        String userName = scanner.nextLine();
+
+        if (guestList.contains(userName)) {
+            System.out.println("Добро пожаловать на вечеринку, " + userName + "!");
+        } else {
+            System.out.println("Извините, " + userName + ", вас нет в списке гостей.");
         }
 
-        System.out.println(Arrays.toString(engines));
+        scanner.close();
     }
 }

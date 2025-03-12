@@ -1,21 +1,33 @@
 package org.example.tasks;
 
 /*
-Есть массив слов. Нужно отфильтровать его так, чтобы в выходном массиве оказались слова, которые начинаются с буквы “W”/”w”.
+Создайте целочисленный ArrayList. Заполните его 100 элементами, добавляя каждый новый элемент в начало списка и
+выведите на экран. Затем удалите из него все четные элементы. И снова выведите на экран.
 */
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Task1 {
     public static void main(String[] args) {
-        String[] words = {"While", "major", "Water", "add", "Wool", "good", "world", "Plan", "wonderful", "waste"};
+        ArrayList<Integer> numbers = new ArrayList<>();
 
-        List<String> filteredWords = Arrays.stream(words)
-                .filter(word -> word.startsWith("W") || word.startsWith("w"))
-                .collect(Collectors.toList());
+        for (int i = 1; i <= 100; i++) {
+            numbers.addFirst(i);
+        }
 
-        System.out.println(filteredWords);
+        System.out.println("Содержимое ArrayList:");
+        System.out.println(numbers);
+
+        Iterator<Integer> iterator = numbers.iterator();
+        while (iterator.hasNext()) {
+            Integer number = iterator.next();
+            if (number % 2 == 0) {
+                iterator.remove();
+            }
+        }
+
+        System.out.println("Содержимое ArrayList после удаления четных элементов:");
+        System.out.println(numbers);
     }
 }
