@@ -1,33 +1,39 @@
 package org.example.tasks;
 
 /*
-Вход на вечеринку только по списку. Есть список имен (коллекция). Пользователь вводит с консоли свое имя, а программа
-проверяет его наличие в списке, после чего говорит может он пройти или нет.
+Есть ArrayList и LinkedList на 100К одинаковых элементов. Нужно написать бенчмарк, который бы показал скорость удаления из
+НАЧАЛА у двух этих листов. Удалить необходимо все элементы и показать результаты скорости выполнения у ArrayList и LinkedList.
 */
 
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class Task2 {
     public static void main(String[] args) {
-        Set<String> guestList = new HashSet<>();
-        guestList.add("Adi");
-        guestList.add("Di");
-        guestList.add("Madi");
-        guestList.add("Shadi");
-        guestList.add("Bob");
+        int size = 100_000;
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Введите ваше имя: ");
-        String userName = scanner.nextLine();
+        List<Integer> arrayList = new ArrayList<>(size);
+        List<Integer> linkedList = new LinkedList<>();
 
-        if (guestList.contains(userName)) {
-            System.out.println("Добро пожаловать на вечеринку, " + userName + "!");
-        } else {
-            System.out.println("Извините, " + userName + ", вас нет в списке гостей.");
+        for (int i = 0; i < size; i++) {
+            arrayList.add(i);
+            linkedList.add(i);
         }
 
-        scanner.close();
+        long startTime = System.nanoTime();
+        while (!arrayList.isEmpty()) {
+            arrayList.removeFirst();
+        }
+        long endTime = System.nanoTime();
+        long arrayListDuration = endTime - startTime;
+
+        startTime = System.nanoTime();
+        while (!linkedList.isEmpty()) {
+            linkedList.removeFirst();
+        }
+        endTime = System.nanoTime();
+        long linkedListDuration = endTime - startTime;
+
+        System.out.println("Время удаления из начала для ArrayList: " + arrayListDuration + " нс");
+        System.out.println("Время удаления из начала для LinkedList: " + linkedListDuration + " нс");
     }
 }

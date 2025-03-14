@@ -1,7 +1,7 @@
 package org.example.tasks;
 
 /*
-Есть две коллекции, нужно удалить из первой те, которые есть во второй.
+Есть две коллекции, нужно оставить в первой только те, которые есть во второй.
 */
 
 import java.util.ArrayList;
@@ -14,10 +14,10 @@ public class Task3 {
 
         List<String> collection2 = new ArrayList<>(Arrays.asList("Banana", "Fig", "Kiwi"));
 
-        System.out.println("Первая коллекция до удаления: " + collection1);
+        System.out.println("Первая коллекция до изменения: " + collection1);
 
-        collection1.removeAll(collection2);
+        collection1.retainAll(collection2);
 
-        System.out.println("Первая коллекция после удаления: " + collection1);
+        System.out.println("Первая коллекция после изменения: " + collection1);
     }
 }
