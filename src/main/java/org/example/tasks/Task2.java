@@ -1,26 +1,36 @@
 package org.example.tasks;
 
 /*
-Дан некоторый текст, его нужно записать в файл. Можно использовать одно и то же предложение, запишите его 1000 раз.
+Написать лябмда-функцию перевода числа в строку с добавлением денежной единицы. Например, 5 -> 5 рублей. Если получится,
+то учесть правильность окончаний, если нет, то можно сократить до "руб".
+Вызовите полученную функцию и выведите результат на экран.
 */
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.util.function.Function;
 
 public class Task2 {
     public static void main(String[] args) {
-        String text = "Это предложение будет записано 1000 раз.\n";
+        Function<Integer, String> toCurrencyString = (amount) -> {
+            int lastDigit = amount % 10;
+            int lastTwoDigits = amount % 100;
 
-        String filePath = "output.txt";
-
-        try (PrintWriter writer = new PrintWriter(new File(filePath))) {
-            for (int i = 0; i < 1000; i++) {
-                writer.print(text);
+            if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
+                return amount + " рублей";
+            } else if (lastDigit == 1) {
+                return amount + " рубль";
+            } else if (lastDigit >= 2 && lastDigit <= 4) {
+                return amount + " рубля";
+            } else {
+                return amount + " рублей";
             }
-            System.out.println("Текст был записан 1000 раз в файл: " + filePath);
-        } catch (FileNotFoundException e) {
-            System.out.println("Ошибка при записи в файл: " + e.getMessage());
-        }
+        };
+
+        System.out.println(toCurrencyString.apply(1));
+        System.out.println(toCurrencyString.apply(2));
+        System.out.println(toCurrencyString.apply(3));
+        System.out.println(toCurrencyString.apply(10));
+        System.out.println(toCurrencyString.apply(114));
+        System.out.println(toCurrencyString.apply(224));
+        System.out.println(toCurrencyString.apply(336));
     }
 }

@@ -1,34 +1,17 @@
 package org.example.tasks;
 
 /*
-Создайте массив чисел и заполните его любыми цифрами. Затем необходимо записать его в файл.
+Используя интерфейс BinaryOperator написать лямбда-выражение, которое бы умножало одно целое число на другое.
 */
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.util.Random;
+import java.util.function.BinaryOperator;
 
 public class Task1 {
     public static void main(String[] args) {
-        int arraySize = 10;
+        BinaryOperator<Integer> multiply = (a, b) -> a * b;
 
-        int[] numbers = new int[arraySize];
+        int result = multiply.apply(5, 10);
 
-        Random rand = new Random();
-        for (int i = 0; i < numbers.length; i++) {
-            numbers[i] = rand.nextInt(10);
-        }
-
-        String filePath = "numbers.txt";
-
-        try (PrintWriter writer = new PrintWriter(new File(filePath))) {
-            for (int num : numbers) {
-                writer.print(num + " ");
-            }
-            System.out.println("Массив записан в файл: " + filePath);
-        } catch (FileNotFoundException e) {
-            System.out.println("Ошибка при записи в файл: " + e.getMessage());
-        }
+        System.out.println("Результат умножения: " + result);
     }
 }
